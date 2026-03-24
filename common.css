@@ -74,7 +74,7 @@ html, body {
   width: 100vw;
   background-color: #fff;
   box-shadow: inset 0 0 0 3px #add8e6;
-  padding-right: 40px; /* 右側のバーの幅分、内側に押し戻す */
+  /*padding-right: 40px; /* 右側のバーの幅分、内側に押し戻す */
   pointer-events: auto; /* 開いているときは操作可能にするため追加 */
   overflow-y: auto;
 }
@@ -132,18 +132,19 @@ html, body {
 menu-contentが上端からどのくらいとか、SNSリンクとタイトルの間の距離はこのくらいとか指定してないのに空いているとき、flexboxの自動計算で決まっている。
 align-itemsは左右、justfy-contentが上下*/
 .menu-content {
+  width: 100vw; /*画面全体を使用に変更*/ /*calc(100% - 40px); /* 右側の40px（バーの文字分）を除いたエリアで中央に */
+  height: 100dvh;
+  
   display: none;
   flex-direction: column;
   align-items: center;    /* 基本は全体を中央に寄せる */
   justify-content: center;
   
-  width: 100vw; /*画面全体を使用に変更*/ /*calc(100% - 40px); /* 右側の40px（バーの文字分）を除いたエリアで中央に */
-  height: 100vh;
   pointer-events: auto;
   font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
   box-sizing: border-box;
   position: relative;
-  /*color: #0787ff; /* color: #4b4b4b; */
+  padding: 0 40px; /* 左右に40pxずつのマージンを設けて中央揃えを維持し、右端の固定テキストとの衝突を回避 */
 }
 /* 開いた時だけ中身を出す */
 .side-bar.is-open .menu-content {
@@ -193,6 +194,7 @@ align-itemsは左右、justfy-contentが上下*/
   width: fit-content;      /* 中身の幅に合わせる */
   margin-bottom: 50px;     /* 下の展示和英タイトルとの余白 */
   line-height: 40px;
+  font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
 }
 .menu-links a {
   text-decoration: under-line;
