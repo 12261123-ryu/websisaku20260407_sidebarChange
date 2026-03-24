@@ -4,7 +4,7 @@
 
 
 .filter-tags {
-  font-family: "游ゴシック","Yu Gothic",sans-serif;
+  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
   font-size: 13px;
   color: #888;
   display: flex;
@@ -33,19 +33,19 @@
     margin: 120px 20px 0px 15px;
 }
 .web-title .title{
-    font-family: "Times","游明朝体","Yu Mincho";
+    font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
     font-size: 19px;
     color: #4a4a4a;
 }
 .web-title .professor-name{
-    font-family: "Times","游明朝体","Yu Mincho";
+    font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
     font-size: 15px;
     color: #4a4a4a;
     margin-top: 7px;
 
 }
 .web-title .titletext{
-    font-family: "Times","游明朝体","Yu Mincho";
+    font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
     font-size: 13px;
     color: #4a4a4a;
     margin: 20px 0 60px 0;
@@ -64,7 +64,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  font-family: "游ゴシック","Yu Gothic",sans-serif;
+  font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
 }
 
 
