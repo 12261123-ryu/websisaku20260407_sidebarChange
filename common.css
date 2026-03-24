@@ -7,7 +7,7 @@ html, body {
   padding: 0;
   overflow-x: hidden; /* 横方向のはみ出しを隠す */
   /*position: fixed;*/    /* iPhoneでの「引っ張り更新」などの余計な動きを止める（任意） */
-  font-family: "Times","Yu Gothic","游ゴシック";
+  font-family: "Times","Yu Gothic","游ゴシック",serif;
 }
 
 
@@ -53,13 +53,14 @@ html, body {
 }
 
 /* 右側のサイドバー */
+/* 3/24を受けて、サイドバーについて、メニューを開いていない時はサイドバーのエリア越しに背後をスクロールできるようにする */
 .side-bar {
   width: 40px;
   height: 100dvh;  /* safariでは下にあるUIで文字が隠れたりするので、動的ビューポートの高さ(dynamic viewport height)を指定 */
   right: 0;
   top: 0;
-  background-color: #fff;
-  box-shadow: inset 0 0 0 1px #add8e6; /* イラレの「線の位置：内側」と同じ挙動。4つ目の数値は線の広がりを指定 */
+  background-color: transparent;
+  box-shadow: none;
   /*flex-shrink: 0;        /* 画面が狭くなってもバーが潰れないようにする */
 
   cursor: pointer;
@@ -68,7 +69,9 @@ html, body {
   align-items: center;
   justify-content: center;
   z-index: 700;
-  pointer-events: auto;
+
+  pointer-events: none; /* サイドバーの初期状態を、指が通り抜ける設定にするため、autoではなくnoneへ */
+  touch-action: none; /* このエリアでのスクロールをブラウザに無視させる */
 
   box-sizing: border-box; /* paddingを幅に含める */
   padding: 20px;
@@ -76,15 +79,22 @@ html, body {
 }
 .side-bar.is-open {
   width: 100vw;
+  background-color: #fff;
   box-shadow: inset 0 0 0 3px #add8e6;
   padding-right: 40px; /* 右側のバーの幅分、内側に押し戻す */
+  pointer-events: auto; /* 開いているときは操作可能にするため追加 */
+  overflow-y: auto;
+}
+.side-bar.is-open .fixed-labels {
+  background-color: transparent;
+  box-shadow: none;
 }
 
 /* 縦書きテキスト */
 .vertical-text {
   writing-mode: vertical-rl;
   color: #add8e6;
-  font-family: "Times","Yu Mincho","游明朝体";
+  font-family: "Times","Yu Mincho","游明朝体",serif;
   white-space: nowrap;   /* 改行を防ぐ */
 
   /* spanを「箱」として認識させ、中の文字を中央へ */
@@ -98,6 +108,11 @@ html, body {
   padding: 0;
   width: 1em;
   margin: 0 0 0 0;
+
+  /* 閉じていても、文字やアイコンは触れるようにする */
+  pointer-events: auto;
+  touch-action: auto;
+  cursor: pointer;
 }
 .fixed-labels{
   position: absolute;
@@ -105,19 +120,23 @@ html, body {
   right: 0;
   width: 40px;
   height: 100%;
+  z-index: 20;
 
   display: flex;
   flex-direction: column; /*中身を縦に並べる*/
   justify-content: space-between; /*最初と最後を端っこに配置し、残りをその中央に配置=上中下に均等にばらけさせる*/
   align-items: center; /*横方向(幅の中央)に揃える*/
   box-sizing: border-box;
-  pointer-events: none; /* 下のメニューの邪魔をしない */
+  pointer-events: none;
   padding: 10px 0 calc(15px + env(safe-area-inset-bottom)) 0;
+
+  box-shadow: inset 0 0 0 1px #add8e6;  /* イラレの「線の位置：内側」と同じ挙動。4つ目の数値は線の広がりを指定 */
+  background-color: #fff; /* 閉じている時の白い帯 */
 }
 /* メニュー画面の時のみ、サイドバー横幅分を引くのではなく画面全体を用いて文字情報を配置 */
 /* flexboxは、どれかを基準にして他を順番に選ぶというときに使いやすい 
-　　menu-contentが上端からどのくらいとか、SNSリンクとタイトルの間の距離はこのくらいとか指定してないのに空いているとき、flexboxの自動計算で決まっている。
-　　align-itemsは左右、justfy-contentが上下*/
+menu-contentが上端からどのくらいとか、SNSリンクとタイトルの間の距離はこのくらいとか指定してないのに空いているとき、flexboxの自動計算で決まっている。
+align-itemsは左右、justfy-contentが上下*/
 .menu-content {
   display: none;
   flex-direction: column;
@@ -127,7 +146,7 @@ html, body {
   width: 100vw; /*画面全体を使用に変更*/ /*calc(100% - 40px); /* 右側の40px（バーの文字分）を除いたエリアで中央に */
   height: 100vh;
   pointer-events: auto;
-  font-family: "Times","Yu Gothic","游ゴシック";
+  font-family: "Times","Yu Gothic","游ゴシック",serif;
   box-sizing: border-box;
   position: relative;
   /*color: #0787ff; /* color: #4b4b4b; */
@@ -138,18 +157,21 @@ html, body {
   flex-direction: column;
 }
 #menu-icon-toggle{
-  color: #7f7f7f;
+  color: #888;
   font-size: 25px;
   pointer-events: auto;
   cursor: pointer;
   z-index: 20;
   /*padding: 1px 0 0 0;*/
+
+  /* 閉じていても、文字やアイコンは触れるようにする */
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: auto;
 }
-/*
-.fixed-labels .bar-low{
-  padding: 0 0 10px 0;;
-}
-*/
+
+
+
 
 
 .menu-links {
@@ -162,8 +184,7 @@ html, body {
 }
 .menu-links a {
   text-decoration: under-line;
-  color: #4b4b4b; /* color: #4b4b4b;#0787ff; */
-  font-size: 15px;
+  color: #4a4a4a;
   text-align: left;
 }
 .menu-links-wrapper {
@@ -178,7 +199,7 @@ html, body {
   font-family: "Times";
   margin-top: 30px;
   gap: 30px;
-  color: #4b4b4b; /* color: #4b4b4b;#0787ff; */
+  color: #4a4a4a;
 }
 
 .exhibition-title {
@@ -190,7 +211,7 @@ html, body {
   font-size: 12px;
   line-height: 1.5;
   white-space: nowrap;
-  color: #4b4b4b; /* color: #4b4b4b;#0787ff; */
+  color: #4a4a4a; /* color: #4b4b4b;#0787ff; */
 }
 .title-jp{
   text-align: left;       /* ブロック内は左揃え */
@@ -207,7 +228,7 @@ html, body {
 
   text-align: center;
   font-size: 12px;
-  color: #a4a4a4;
+  color: #888;
   width: 100%;
   white-space: nowrap;
 }
@@ -230,7 +251,7 @@ html, body {
   flex-direction: column; /* 中身を縦に並べる */
   align-items: flex-start; /* 中身を左寄せにする */
   width: 100%;
-  padding: 0px 0px;     /* 上下px、左右pxの余白 */
+  padding-right: 40px;
   box-sizing: border-box; /* パディングを幅に含める */
 }
 
@@ -264,17 +285,13 @@ html, body {
   display: flex;
   gap: 20px; /* 作品名と作者名の間の隙間 */
   font-size: 14px;
-  color: #333;
+  color: #4a4a4a;
   padding: 0 5px; /* 少しだけ内側に寄せる */
-  font-family: "游ゴシック","Yu Gothic";
+  font-family: "Yu Gothic","游ゴシック",sans-serif;
 }
 
-/*.work-title {
-  font-weight: 500;
-}*/
-
 .work-designer {
-  color: #666; /* 作者名は少しだけ薄くすると読みやすい */
+  color: #4a4a4a;
 }
 
 /* 画像が読み込まれるまでの背景（オプション） */

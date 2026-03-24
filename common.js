@@ -1,17 +1,18 @@
 const sideBar = document.getElementById('side-bar');
-const menuIconContainer = document.getElementById('menu-icon-toggle'); // アイコンの親
+const fixedLabels = document.querySelector('.fixed-labels');
+const menuIconContainer = document.getElementById('menu-icon-toggle');
 const menuIcon = menuIconContainer.querySelector('span');
 
-sideBar.addEventListener('click', (e) => {
+// 修正：サイドバー全体ではなく、ラベル部分だけをクリック対象にする
+fixedLabels.addEventListener('click', (e) => {
   const isOpen = sideBar.classList.contains('is-open');
 
   if (!isOpen) {
-    // 【閉じてる時】バーのどこを押しても開く
+    // 閉じてる時はラベルのどこを押しても開く
     sideBar.classList.add('is-open');
     menuIcon.textContent = '×';
   } else {
-    // 【開いてる時】バツ印（アイコンエリア）を押した時だけ閉じる
-    // .closest() を使うと、アイコンの文字(span)を押しても、その親のdivを押しても反応します
+    // 開いてる時（is-openがある時）は、アイコン部分のクリックのみ反応
     if (e.target.closest('#menu-icon-toggle')) {
       sideBar.classList.remove('is-open');
       menuIcon.textContent = '≡';

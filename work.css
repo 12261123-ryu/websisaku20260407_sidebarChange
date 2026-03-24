@@ -12,20 +12,20 @@
 }
 
 #work-title{
-    font-family: "Times","游明朝体","Yu Mincho";
+    font-family: "Times","游明朝体","Yu Mincho",sans-serif;
     font-size: 25px;
-    color: #5b5b5b;
+    color: #4a4a4a;
     margin-top: 20px;
 }
 #work-designer{
-    font-family: "Times","游明朝体","Yu Mincho";
+    font-family: "Yu Gothic","游ゴシック",sans-serif;
     font-size: 17px;
-    color: #5b5b5b;
+    color: #4a4a4a;
     margin: 10px 0 60px 0;
 }
 #work-concept{
-    font-family: "Times","游ゴシック","Yu Gothic";
-    color: #5b5b5b;
+    font-family: "Yu Gothic","游ゴシック",sans-serif;
+    color: #4a4a4a;
     font-size: 13px;
     margin-top: 0px;
     line-height: 1.8;
@@ -33,6 +33,7 @@
     white-space: pre-wrap; /* 改行を反映させる */
 }
 .meta-info {
+  font-family: "Yu Gothic","游ゴシック",sans-serif;
   display: flex;
   flex-direction: column; /* 項目を縦に並べる */
   margin: 30px 0 70px 0;
@@ -113,16 +114,16 @@
 
 .return-to-Top, .recommend-list-title{
   font-family: "Times","Yu Gothic","游ゴシック";
-  color: #5b5b5b;
+  color: #4a4a4a;
 }
 .return-to-Top{
   padding: 0 40px;
 }
 .return-to-Top a{
-  color:#5b5b5b;
+  color:#4a4a4a;
 }
 .recommend-list-title{
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   padding: 0 15px;
   font-size: 20px;
 }
@@ -133,7 +134,7 @@
 .rec-reason{
   margin-top: 4px;   /* 作者名との間隔 */
   font-size: 13px;   /* かなり小さめにして補足情報感を出す */
-  color: #949494;       /* 作者名(#666)よりさらに薄いグレー */
+  color: #888;       /* 作者名(#666)よりさらに薄いグレー */
 }
 
 /* 作品ごとの間(一覧とは距離を変えている) */
@@ -141,7 +142,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-family: "Yu Gothic","游ゴシック";
+  font-family: "Yu Gothic","游ゴシック",sans-serif;
 }
 
 
