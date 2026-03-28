@@ -227,6 +227,7 @@ align-itemsは左右、justfy-contentが上下*/
   text-decoration: none;
   color: #4a4a4a;
   text-align: left;
+  transition: color 0.8s ease;
 }
 
 .sns-links {
@@ -428,7 +429,11 @@ align-itemsは左右、justfy-contentが上下*/
   transition: color 0s;
 }
 
-
+.menu-links a:active{
+  color: magenta;
+  text-decoration: underline;
+  transition: 0s;
+}
 }
 
 
