@@ -23,6 +23,15 @@
   color: magenta;
 }
 
+#project-tags{
+  margin-top: 17px;
+}
+
+
+
+/* ホバー演出がタッチする機材で残ったりしないように調整 */
+/* PC用 */
+@media (hover: hover) {
 .filter-tags span:hover{
   color: magenta;
   transition: 0.3s ease;
@@ -32,9 +41,12 @@
   opacity: 0.3;
   transition: 0.3s ease;
 }
-
-#project-tags{
-  margin-top: 17px;
+}
+/* スマホ用 */
+@media (hover: none) {
+.filter-tags span.active {
+  color: magenta;
+}
 }
 
 

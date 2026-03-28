@@ -370,10 +370,7 @@ align-itemsは左右、justfy-contentが上下*/
 }
 
 
-.work-item-link:hover .work-thumbnail img {
-  filter: grayscale(100%);
-  transition: filter 0.3s ease;
-}
+
 .work-thumbnail::after {
   content: "";
   position: absolute;
@@ -387,17 +384,28 @@ align-itemsは左右、justfy-contentが上下*/
   transition: opacity 0.3s ease; /* 青くなるのをスムーズにする */
   pointer-events: none;    /* クリックを画像本体に伝える */
 }
+
+
+
+
+/* ホバー演出がタッチする機材で残ったりしないように調整 */
+/* PC用 */
+@media (hover: hover) {
 /* 4. リンク（親）にホバーした時、中のオーバーレイ（子）を表示する */
 .work-item-link:hover .work-thumbnail::after {
   opacity: 1; /* ホバー時は青い層を重ねる */
 }
-
 .work-item-link:hover .work-info{
   color: magenta;
   transition: 0.3s ease;
 }
-
-
+.work-item-link:hover .work-thumbnail img {
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+}
+/* スマホ用 */
+@media (hover: none) {
 /* iPhoneでタップした時に少し反応させる（任意） */
 /*.work-item-link:active {  opacity: 0.7;}*/
 
@@ -413,6 +421,7 @@ align-itemsは左右、justfy-contentが上下*/
 .work-item-link:active .work-info{
   color: magenta;
   transition: color 0s;
+}
 }
 
 
