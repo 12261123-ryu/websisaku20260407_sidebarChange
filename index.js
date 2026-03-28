@@ -31,21 +31,25 @@ fetch('project.json')
         materialSection.appendChild(span);
       }
 
-      // クリックイベント
+      // クリックイベント　sessionStorageを保存、URL書き換え、履歴を積ませない
       span.addEventListener('click', () => {
         const clickedId = String(item.id);
         if (activeTagId === clickedId) {
           activeTagId = null;
           document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
+          sessionStorage.removeItem('lastFilter');
+          history.replaceState(null, '', 'index.html'); // URLをリセット
           renderWorks("all");
         } else {
           activeTagId = clickedId;
           document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
           span.classList.add('active');
-          if (item.id === "その他") {
-            renderWorks("others", "その他", "", ""); 
-          } else {
-            renderWorks(item.id, item.display, item.description || "", item.professor || "");
+          sessionStorage.setItem('lastFilter', clickedId);
+          history.replaceState(null, '', `index.html?filter=${clickedId}`); // URLを書き換え
+        if (item.id === "その他") {
+          renderWorks("others", "その他", "", ""); 
+        } else {
+          renderWorks(item.id, item.display, item.description || "", item.professor || "");
           }
         }
       });
@@ -140,16 +144,32 @@ else {
       workList.insertAdjacentHTML('beforeend', workHTML);
     }
   });
+  
+  // 表示件数チェック（素材・プロジェクト絞り込み時のみ）
+  if (searchKey !== 'all' && searchKey !== 'others') {
+    const displayedCount = workList.querySelectorAll('.work-item-link').length;
+  if (displayedCount === 0) {
+    titleElem.innerText = `${displayName}を使用した作品はありません。`;
+  }
+}
+  
 }
 
-// 3. データの初期読み込み
+
+// 3. データの初期読み込み。work.json読み込み失敗時のメッセージあり
 async function loadWorks() {
   try {
     const response = await fetch('work.json'); 
-    allWorks = await response.json(); // グローバル変数に保存
-    renderWorks("all"); // 初回描画
+    allWorks = await response.json();
+    renderWorks("all");
+    setTimeout(restoreScroll, 2000);
   } catch (error) {
     console.error('work.json の読み込みに失敗しました:', error);
+    // ユーザー向けエラー表示
+    const workList = document.getElementById('work-list');
+    if (workList) {
+      workList.innerHTML = '<p style="padding: 20px; color: #888;">作品データの読み込みに失敗しました。ページを再読み込みしてください。</p>';
+    }
   }
 }
 
@@ -196,14 +216,55 @@ function checkUrlParams() {
               }
             });
 
-            // 絞り込み結果が見えるようにトップへスクロール
-            window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         });
       }
     }, 100);
   }
 }
+
+
+
+
+//このウェブはbodyではなくmain-windowの中でスクロールしているので、window.scrollYではなくmainWindow.scrollTopを使用
+// スクロール位置の保存（100msごとに1回）
+const mainWindow = document.querySelector('.main-window');
+if (mainWindow) {
+  let timer = null;
+  mainWindow.addEventListener('scroll', () => {
+    if (timer) return;
+    timer = setTimeout(() => {
+      sessionStorage.setItem('scrollY', mainWindow.scrollTop);
+      timer = null;
+    }, 100);
+  });
+}
+
+// スクロール位置の復元
+//これはcommonjsのpgeshowでリロードする処理と復元とで干渉する。astroにしたらあちらは消すので、まあ大丈夫か？
+function restoreScroll() {
+  const mainWindow = document.querySelector('.main-window');
+  const savedY = sessionStorage.getItem('scrollY');
+  if (!mainWindow || !savedY) return;
+  
+  const targetY = parseInt(savedY);
+  sessionStorage.removeItem('scrollY');
+
+  // 反映されるまでリトライ
+  let attempts = 0;
+  const tryScroll = () => {
+    mainWindow.scrollTop = targetY;
+    if (mainWindow.scrollTop < targetY - 10 && attempts < 10) {
+      attempts++;
+      setTimeout(tryScroll, 100);
+    }
+  };
+  tryScroll();
+}
+window.addEventListener('load', restoreScroll);
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) restoreScroll();
+});
 
 
 

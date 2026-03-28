@@ -6,10 +6,13 @@ const topLink = document.querySelector('.link-to-Top');
 
 
 
+
 // トップへのリンクが存在する場合のみイベント設定
 if (topLink) {
   topLink.addEventListener('click', (e) => {
     e.stopPropagation(); 
+    sessionStorage.removeItem('lastFilter');
+    sessionStorage.removeItem('scrollY');
   });
 }
 
@@ -48,6 +51,9 @@ fixedLabels.addEventListener('click', (e) => {
 });
 
 
+// タッチイベントを有効化するおまじない
+//一覧などの作品ブロックをタップ時に、ホバーのように一瞬画像は青く文字はマゼンタにする試し
+document.addEventListener("touchstart", function() {}, {passive: true});
 
 
 

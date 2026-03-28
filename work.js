@@ -18,13 +18,24 @@ async function loadWorkDetail() {
 
     const work = works.find(item => item.en_name && item.en_name.trim() === targetName.trim());
 
+    //戻るリンクを書き換える(絞り込み状態を保存する)
     if (work) {
-      //タブ名の変更
       document.title = `Prototype / ${work.title} / 統合デザイン学科卒業・修了制作展2026 / web図録`;
-
       renderWorkPage(work, knownMaterials);
-      // 作品表示が終わった後、全作品データを使ってレコメンドを描画
       renderRecommendations(work, works, knownMaterials);
+
+      // 戻るリンクにfilterパラメータを付ける
+      const lastFilter = sessionStorage.getItem('lastFilter');
+      const returnLink = document.querySelector('.return-to-Top a');
+      if (returnLink && lastFilter) {
+        returnLink.href = `index.html?filter=${lastFilter}`;
+      }
+    } else {
+      // 作品が見つからない場合
+      const mainWindow = document.querySelector('.main-window');
+      if (mainWindow) {
+        mainWindow.innerHTML = '<p style="padding: 40px; color: #888;">作品が見つかりませんでした。<a href="index.html">一覧に戻る</a></p>';
+      }
     }
   } catch (error) {
     console.error("エラー:", error);

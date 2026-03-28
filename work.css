@@ -15,7 +15,6 @@
     font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
     font-size: 25px;
     color: #4a4a4a;
-    margin-top: 20px;
 }
 #work-designer{
     font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
@@ -84,11 +83,12 @@
   color: #888;
   text-decoration: none;
   display: inline-block;
+  transition: color 0.3s ease;
 }
 .tag-link:hover {
   text-decoration: underline;
   color: magenta;
-  opacity: 0.8;
+  transition: 0.3s ease;
 }
 
 
@@ -147,6 +147,13 @@
 }
 .return-to-Top a{
   color:#4a4a4a;
+  transition: 0.3s ease;
+  text-decoration: none;
+}
+.return-to-Top a:hover{
+   color: magenta;
+   transition: color 0.3s ease;
+   text-decoration: underline;
 }
 .recommend-list-title{
   margin: 0 0 30px 20px;
@@ -157,11 +164,15 @@
 /* レコメンドで、作者名の右にできるレコメンド理由 */
 /* レコメンド理由のエリア */
 .rec-reason{
-  font-size: 13px;   /* かなり小さめにして補足情報感を出す */
-  color: #888;       /* 作者名(#666)よりさらに薄いグレー */
+  font-size: 13px;
+  color: #888;
   width: 100%; /* 1行を占有させる */
+  transition: 0.3s ease;
 }
-
+.work-item-link:hover .rec-reason{
+  color: magenta;
+  transition: 0.3s ease;
+}
 
 
 
@@ -180,7 +191,7 @@
     "main-visual"
     "info-block"
     "sub-images";
-  gap: 20px; /* スマホ時の要素間の縦の隙間 */
+  gap: 16px; /* スマホ時の要素間の縦の隙間 */
 }
 /* HTMLのクラスに対して、Grid上の名前を割り当てる */
 #main-visual { grid-area: main-visual; }

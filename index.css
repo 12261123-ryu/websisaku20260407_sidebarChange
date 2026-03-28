@@ -17,12 +17,24 @@
 .filter-tags span {
   cursor: pointer;
   /* padding: 0 5px; ← JSのスペースだけでなくCSSでも微調整可能 */
+  transition: color 0.3s ease;
 }
 .filter-tags span.active {
   color: magenta;
 }
+
+.filter-tags span:hover{
+  color: magenta;
+  transition: 0.3s ease;
+}
+.filter-tags span.active:hover{
+  color: magenta;
+  opacity: 0.3;
+  transition: 0.3s ease;
+}
+
 #project-tags{
-  margin-top: 15px;
+  margin-top: 17px;
 }
 
 
@@ -80,6 +92,10 @@
   }
   .web-title{
     margin-left: 5px;
+  }
+  .work-info{
+    padding: 0;
+    margin-left: 4px;
   }
 
 }

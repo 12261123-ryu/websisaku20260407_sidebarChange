@@ -81,6 +81,7 @@ html, body {
   /*padding-right: 40px; /* 右側のバーの幅分、内側に押し戻す */
   pointer-events: auto; /* 開いているときは操作可能にするため追加 */
   overflow-y: auto;
+  font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
 }
 .side-bar.is-open .fixed-labels {
   background-color: transparent;
@@ -225,6 +226,11 @@ align-itemsは左右、justfy-contentが上下*/
   color: #4a4a4a;
   text-align: left;
 }
+.menu-links a:hover{
+  color: magenta;
+  text-decoration: underline;
+  transition: 0.3s;
+}
 .sns-links {
   display: flex;
   font-family: "Times","Times New Roman";
@@ -277,8 +283,6 @@ align-itemsは左右、justfy-contentが上下*/
 }
 
 
-
-
 /* iPhoneのタップハイライトを消す */
 * {
   -webkit-tap-highlight-color: transparent;
@@ -325,31 +329,36 @@ align-itemsは左右、justfy-contentが上下*/
   width: 100%;
   height: auto;
   display: block;
-  /* 画像の下に隙間ができないように */
+  filter: none;
+
+  filter: grayscale(0%);     /* 彩度100%（カラー） */
+  transition: filter 0.4s ease;
 }
 
 /* 作品名と作者名のエリア */
 .work-info {
-  margin-top: 17px; /* 作品名と画像の間の距離 */
-  margin-left: 4px;
+  margin: 12px 4px 0 4px; /* topは作品名と画像の間の距離。rightとleftは左右の余白 */
   display: flex;
-  gap: 20px; /* 作品名と作者名の間の隙間 */
+  column-gap: 20px; /* 横並び時の作品名と作者名の間の隙間 */
+  row-gap: 8px;
   font-size: 14px;
   color: #4a4a4a;
   padding: 0 5px; /* 少しだけ内側に寄せる */
   font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
   flex-wrap: wrap;
-  line-height: 0.5;
+  line-height: 1.5;
+  transition: color 0.3s ease;
 }
-
 
 /* 画像が読み込まれるまでの背景（オプション） */
 .work-thumbnail {
+  /*background-color: #f9f9f9;*/
+
   background-color: #f9f9f9;
+  position: relative;
+  overflow: hidden;
+  display: block;
 }
-
-
-
 
 
 /* リンクの初期デザインを打ち消す */
@@ -360,9 +369,50 @@ align-itemsは左右、justfy-contentが上下*/
   width: 100%;
 }
 
+
+.work-item-link:hover .work-thumbnail img {
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+.work-thumbnail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00aeef; /* 色指定*/
+  opacity: 0;             /* 初期状態は透明 */
+  mix-blend-mode: screen; /* 画像と色を「スクリーン」でブレンド（白い部分が青く光る） */
+  transition: opacity 0.3s ease; /* 青くなるのをスムーズにする */
+  pointer-events: none;    /* クリックを画像本体に伝える */
+}
+/* 4. リンク（親）にホバーした時、中のオーバーレイ（子）を表示する */
+.work-item-link:hover .work-thumbnail::after {
+  opacity: 1; /* ホバー時は青い層を重ねる */
+}
+
+.work-item-link:hover .work-info{
+  color: magenta;
+  transition: 0.3s ease;
+}
+
+
 /* iPhoneでタップした時に少し反応させる（任意） */
-.work-item-link:active {
-  opacity: 0.7;
+/*.work-item-link:active {  opacity: 0.7;}*/
+
+/* スマホなどタップ操作系での反応の試作(ホバーなどとケンカするなら消す。代わりに上のactiveを復活) */
+.work-item-link:active .work-thumbnail::after{
+  opacity: 1;
+  transition: 0s;
+}
+.work-item-link:active .work-thumbnail img {
+  filter: grayscale(100%);
+  transition: filter 0s;
+}
+.work-item-link:active .work-info{
+  color: magenta;
+  transition: color 0s;
 }
 
 
