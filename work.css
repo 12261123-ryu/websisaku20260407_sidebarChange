@@ -41,13 +41,9 @@
   line-height: 1.8;
   color: #888;
 }
-#work-contact a {
-  color: inherit; /* 親要素（黒など）の文字色を引き継ぐ */
-  text-decoration: underline; /* アンダーラインはつける */
-}
 /* 訪問済み（紫）やホバー時の色変化を無効化 */
 #work-contact a:visited {
-  color: inherit;
+  color: #888;
 }
 
 /* 各行の設定 */
@@ -66,20 +62,17 @@
 
 /* 内容部分（改行されてもラベルの下に回り込まない） */
 .meta-content {
+  color: #888;
   flex-grow: 1;
   word-break: break-all; /* 長い単語でも枠内で改行させる */
   white-space: pre-wrap; /* 改行を反映させる */
   max-width: 220px;     /* 箱組みのために横幅制限 */
 }
 
+
+/* リンク共通ベース */
+.tag-link,
 #work-contact a {
-  color: inherit;
-  text-decoration: underline;
-}
-
-
-/* 所属と素材名のハッシュタグのcss */
-.tag-link {
   color: #888;
   text-decoration: none;
   display: inline-block;
@@ -133,7 +126,7 @@
   grid-template-columns: 1fr;
 }
 
-.return-to-Top, .recommend-list-title{
+.recommend-list-title{
   font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic";
   color: #4a4a4a;
 }
@@ -141,15 +134,11 @@
   margin-left: 40px;
 }
 .return-to-Top a{
-  color:#4a4a4a;
-  transition: 0.3s ease;
+  color: #4a4a4a; /* aタグへの色継承 */
+  transition: color 0.3s ease;
   text-decoration: none;
 }
-.return-to-Top a:hover{
-   color: magenta;
-   transition: color 0.3s ease;
-   text-decoration: underline;
-}
+
 .recommend-list-title{
   margin: 0 0 30px 20px;
   font-size: 20px;
@@ -170,10 +159,13 @@
 
 
 
+
 /* ホバー演出がタッチする機材で残ったりしないように調整 */
 /* PC用 */
 @media (hover: hover) {
-  .tag-link:hover {
+  .tag-link:hover,
+  #work-contact a:hover,
+  .return-to-Top a:hover {
   text-decoration: underline;
   color: magenta;
   transition: 0.3s ease;
@@ -185,7 +177,9 @@
 }
 /* スマホ用 */
 @media (hover: none) {
-.tag-link:active {
+.tag-link:active,
+#work-contact a:active,
+.return-to-Top a:active {
   text-decoration: underline;
   color: magenta;
   transition: 0s ease;
@@ -194,6 +188,7 @@
   color: magenta;
   transition: 0s ease;
 }
+
 }
 
 

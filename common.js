@@ -6,8 +6,6 @@ const topLink = document.querySelector('.link-to-Top');
 
 
 
-
-// トップへのリンクが存在する場合のみイベント設定
 if (topLink) {
   topLink.addEventListener('click', (e) => {
     e.stopPropagation(); 
@@ -15,6 +13,16 @@ if (topLink) {
     sessionStorage.removeItem('scrollY');
   });
 }
+
+// web図録トップリンクのスクロールリセット（メニュー内）
+const menuTopLink = document.querySelector('.linktoTop');
+if (menuTopLink) {
+  menuTopLink.addEventListener('click', () => {
+    sessionStorage.removeItem('lastFilter');
+    sessionStorage.setItem('scrollY', '0');
+  });
+}
+
 
 
 
