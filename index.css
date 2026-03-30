@@ -10,21 +10,21 @@
   display: flex;
   flex-wrap: wrap;       /* 画面端で自動で次の行へ */
   line-height: 2;      /* 行間を少し空けてタップしやすく */
-  word-break: break-all; /* 長い単語でも崩れないように */
-  margin-left: 10px;
 }
 
 .filter-tags span {
   cursor: pointer;
   /* padding: 0 5px; ← JSのスペースだけでなくCSSでも微調整可能 */
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 .filter-tags span.active {
   color: magenta;
 }
 
-#project-tags{
-  margin-top: 17px;
+.filter-tags-wrapper{
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 
@@ -68,7 +68,7 @@
 
 }
 .web-title .titletext{
-    font-family: "Times","Times New Roman","游明朝体","游明朝","Yu Mincho","YuMincho",serif;
+    font-family: "游ゴシック","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
     font-size: 12px;
     color: #4a4a4a;
     margin: 20px 0 60px 0;
@@ -94,11 +94,28 @@
 
 /* レスポンシブ */
 
+
+@media (max-width:599px) {
+      .filter-tags-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    #project-tags, #material-tags {
+        display: contents; /* divの枠を消して中身だけ出す */
+      }      
+}
+
+
+
 /* 600px〜819px: 1列・左右に余白 */
 @media (min-width: 600px) {
   .content-wrapper {
     padding-left: 7%;
     padding-right: calc(40px + 7%);
+  }
+  #project-tags, #material-tags {
+    display: flex;
+    flex-wrap: wrap;
   }
   .filter-tags{
     margin-left: 5px;
