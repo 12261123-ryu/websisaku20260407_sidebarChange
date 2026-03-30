@@ -326,12 +326,17 @@ align-itemsは左右、justfy-contentが上下*/
 /* サムネイル画像 */
 .work-thumbnail img {
   width: 100%;
-  height: auto;
+  /*height: auto;*/ /* サムネイルを正方形化試作 */
   display: block;
   filter: none;
 
   filter: grayscale(0%);     /* 彩度100%（カラー） */
   transition: filter 0.4s ease;
+
+  /* サムネイルを正方形化試作 */
+  height: 100%;
+  object-fit: cover; /* 正方形に収まるようにトリミング */
+  object-position: center; /* 中央を基準にトリミング */
 }
 
 /* 作品名と作者名のエリア */
@@ -357,6 +362,9 @@ align-itemsは左右、justfy-contentが上下*/
   position: relative;
   overflow: hidden;
   display: block;
+
+  /* サムネイルを正方形化試作 */
+  aspect-ratio: 1 / 1; /* 正方形に固定 */
 }
 
 
