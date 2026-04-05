@@ -261,7 +261,8 @@
   // 追加：戻るボタンへの対応
   window.addEventListener('popstate', () => {
     const params = new URLSearchParams(window.location.search);
-    if (window.updateTubuColors) window.updateTubuColors(params.get('filter'));
+    const filter = params.get('filter');
+    if (window.updateTubuColors) window.updateTubuColors(filter || 'all');
   });
 
   function init() {

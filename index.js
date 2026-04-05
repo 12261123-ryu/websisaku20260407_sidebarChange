@@ -54,6 +54,11 @@ fetch('project.json')
           document.querySelectorAll('.filter-tags span').forEach(s => s.classList.remove('active'));
           sessionStorage.removeItem('lastFilter');
           history.replaceState(null, '', 'index.html'); // URLをリセット
+          //つぶつぶカラーを戻す
+          if (window.updateTubuColors) {
+          window.updateTubuColors('all');
+          }
+
           renderWorks("all");
         } else {
           activeTagId = clickedId;
@@ -133,7 +138,7 @@ else {
 
     if (searchKey === "all") {
     // ALLの時はシャッフルしたコピーを作成
-    displayWorks = shuffleArray(allWorks);
+    displayWorks = [...allWorks];
   } 
   else {
     // 絞り込み時は抽出してソート
@@ -181,19 +186,31 @@ else {
   
 
 // 3. データの初期読み込み。work.json読み込み失敗時のメッセージあり
+//シャッフルをウェブに入った時のみにして、絞り込み解除やトップリンク、リロードなどでは解除しない。タブを閉じるか別タブ閲覧で新しいシャッフルになる
 async function loadWorks() {
   try {
     const response = await fetch('work.json'); 
-    allWorks = await response.json();
+    const works = await response.json();
 
-    // 読み込み完了後にrenderWorks("all")を呼べば、自動的に中でシャッフルされる
+    // sessionStorageにシャッフル済み順番が保存されているか確認
+    const savedOrder = sessionStorage.getItem('worksOrder');
+    if (savedOrder) {
+      // 保存済みの順番でallWorksを並び替え
+      const order = JSON.parse(savedOrder);
+      allWorks = order.map(enName => works.find(w => w.en_name === enName)).filter(Boolean);
+    } else {
+      // 初回：シャッフルして順番を保存
+      allWorks = works.sort(() => Math.random() - 0.5);
+      sessionStorage.setItem('worksOrder', JSON.stringify(allWorks.map(w => w.en_name)));
+    }
+
     renderWorks("all");
     setTimeout(restoreScroll, 2000);
   } catch (error) {
     console.error('work.json の読み込みに失敗しました:', error);
     const workList = document.getElementById('work-list');
     if (workList) {
-      workList.innerHTML = '<p style="padding: 20px; color: #888;">作品データの読み込みに失敗しました。</p>';
+      workList.innerHTML = '<p style="padding: 20px; color: #888;">作品データの読み込みに失敗しました。ページを再読み込みしてください。</p>';
     }
   }
 }
