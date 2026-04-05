@@ -150,9 +150,7 @@ else {
     });
 
     displayWorks.sort((a, b) => {
-      const nameA = a.hiragana_name || a.title || "";
-      const nameB = b.hiragana_name || b.title || "";
-      return nameA.localeCompare(nameB, 'ja');
+      return parseInt(a.sort_number) - parseInt(b.sort_number);
     });
   }
 
@@ -192,6 +190,12 @@ async function loadWorks() {
     const response = await fetch('work.json'); 
     const works = await response.json();
 
+    // リロード時はシャッフルし直す(一覧でALL表示時のみ利かせる)
+    const isReload = performance.getEntriesByType('navigation')[0]?.type === 'reload';
+    if (isReload) {
+      sessionStorage.removeItem('worksOrder');
+    }
+
     // sessionStorageにシャッフル済み順番が保存されているか確認
     const savedOrder = sessionStorage.getItem('worksOrder');
     if (savedOrder) {
@@ -205,7 +209,6 @@ async function loadWorks() {
     }
 
     renderWorks("all");
-    setTimeout(restoreScroll, 2000);
   } catch (error) {
     console.error('work.json の読み込みに失敗しました:', error);
     const workList = document.getElementById('work-list');
@@ -273,36 +276,31 @@ function checkUrlParams() {
 
 
 
-
-//このウェブはbodyではなくmain-windowの中でスクロールしているので、window.scrollYではなくmainWindow.scrollTopを使用
 // スクロール位置の保存（100msごとに1回）
-const mainWindow = document.querySelector('.main-window');
-if (mainWindow) {
+if (true) {
   let timer = null;
-  mainWindow.addEventListener('scroll', () => {
+  window.addEventListener('scroll', () => {
     if (timer) return;
     timer = setTimeout(() => {
-      sessionStorage.setItem('scrollY', mainWindow.scrollTop);
+      sessionStorage.setItem('scrollY', window.scrollY);
       timer = null;
     }, 100);
   });
 }
 
 // スクロール位置の復元
-//これはcommonjsのpgeshowでリロードする処理と復元とで干渉する。astroにしたらあちらは消すので、まあ大丈夫か？
 function restoreScroll() {
-  const mainWindow = document.querySelector('.main-window');
   const savedY = sessionStorage.getItem('scrollY');
-  if (!mainWindow || !savedY) return;
+  if (!savedY) return;
   
   const targetY = parseInt(savedY);
   sessionStorage.removeItem('scrollY');
 
-  // 反映されるまでリトライ
+  //反映されるまでリトライ
   let attempts = 0;
   const tryScroll = () => {
-    mainWindow.scrollTop = targetY;
-    if (mainWindow.scrollTop < targetY - 10 && attempts < 10) {
+    window.scrollTo(0, targetY);
+    if (window.scrollY < targetY - 10 && attempts < 10) {
       attempts++;
       setTimeout(tryScroll, 100);
     }

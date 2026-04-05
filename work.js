@@ -142,20 +142,75 @@ if (work.project === "M") {
     subContentContainer.innerHTML = ''; 
 
     const renderVideos = () => {
-      if (work.video_list && work.video_list.length > 0) {
-        work.video_list.forEach(url => {
-          const match = url.match(/(?:v=|shorts\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-          const videoId = match ? match[1] : null;
-          if (videoId) {
-            const videoTag = `
-              <div class="content-item video-item">
-                <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
-              </div>`;
-            subContentContainer.insertAdjacentHTML('beforeend', videoTag);
-          }
-        });
+    if (work.video_list && work.video_list.length > 0) {
+      work.video_list.forEach(url => {
+        const trimmedUrl = url.toString().trim();
+        let embedHtml = null;
+        let isVertical = false;
+
+      // YouTube（ショート判定あり）
+      const youtubeMatch = trimmedUrl.match(/(?:v=|shorts\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+        if (youtubeMatch) {
+          isVertical = trimmedUrl.includes('shorts/');
+          embedHtml = `<iframe src="https://www.youtube.com/embed/${youtubeMatch[1]}" allowfullscreen></iframe>`;
       }
-    };
+
+      // Vimeo
+      if (!embedHtml) {
+        const vimeoMatch = trimmedUrl.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        if (vimeoMatch) {
+          embedHtml = `<iframe src="https://player.vimeo.com/video/${vimeoMatch[1]}" allowfullscreen></iframe>`;
+        }
+      }
+
+      // Google Drive動画
+      if (!embedHtml) {
+        const driveMatch = trimmedUrl.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (driveMatch) {
+          embedHtml = `<iframe src="https://drive.google.com/file/d/${driveMatch[1]}/preview" allowfullscreen></iframe>`;
+        }
+      }
+
+      // Instagram（公式埋め込み）
+      if (!embedHtml) {
+        const instaMatch = trimmedUrl.match(/instagram\.com\/(p|reel|tv)\/([a-zA-Z0-9_-]+)/);
+        if (instaMatch) {
+        const instaUrl = `https://www.instagram.com/${instaMatch[1]}/${instaMatch[2]}/`;
+        subContentContainer.insertAdjacentHTML('beforeend', `
+          <div class="content-item video-item vertical">
+            <blockquote class="instagram-media" 
+              data-instgrm-permalink="${instaUrl}"
+              data-instgrm-version="14"
+              style="width:100%; max-width:360px;">
+            </blockquote>
+          </div>
+        `);
+        // Instagram埋め込みスクリプトを読み込む（未読み込みの場合のみ）
+        if (!document.getElementById('instagram-embed-script')) {
+          const script = document.createElement('script');
+          script.id = 'instagram-embed-script';
+          script.src = 'https://www.instagram.com/embed.js';
+          script.async = true;
+          document.body.appendChild(script);
+        } else if (window.instgrm) {
+          window.instgrm.Embeds.process();
+        }
+        return; // embedHtmlは使わないのでここで終了
+      }
+    }
+
+
+      if (embedHtml) {
+        const verticalClass = isVertical ? ' vertical' : '';
+        const videoTag = `
+          <div class="content-item video-item${verticalClass}">
+            ${embedHtml}
+          </div>`;
+        subContentContainer.insertAdjacentHTML('beforeend', videoTag);
+      }
+    });
+  }
+};
 
     const renderImages = () => {
       if (work.image_list && work.image_list.length > 0) {

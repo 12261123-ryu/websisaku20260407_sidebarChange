@@ -17,12 +17,14 @@
     color: #4a4a4a;
 }
 #work-designer{
+    /*font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic",serif;*/
     font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
     font-size: 17px;
     color: #4a4a4a;
     margin: 10px 0 40px 0;
 }
 #work-concept{
+    /*font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic",serif;*/
     font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
     color: #4a4a4a;
     font-size: 13px;
@@ -33,6 +35,7 @@
     max-width: 280px;     /* 箱組みのために横幅制限 */
 }
 .meta-info {
+  /*font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic",serif;*/
   font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
   display: flex;
   flex-direction: column; /* 項目を縦に並べる */
@@ -102,6 +105,11 @@
   border: none;
   display: block;
 }
+/* ショート・縦長動画 */
+.video-item.vertical iframe {
+  aspect-ratio: 9 / 16;
+  max-width: 360px;
+}
 
 /* 画像の微調整（既存のものを整理） */
 .sub-image-item img {
@@ -127,6 +135,7 @@
 }
 
 .recommend-list-title{
+  /*font-family: "Times","Times New Roman","游ゴシック","游ゴシック体","Yu Gothic","YuGothic",serif;*/
   font-family: 'YakuHanJPs', 'Noto Sans JP', sans-serif;
   color: #4a4a4a;
 }

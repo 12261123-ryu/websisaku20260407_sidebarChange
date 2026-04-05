@@ -94,7 +94,7 @@
              },
         { 
             "display": "スタイロ", 
-            "id":"スタイロ",
+            "id":"スタイロフォーム",
             "type":"material",
             "description": ""
         },
