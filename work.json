@@ -1456,7 +1456,12 @@
     "image_list": [
       "images/Bachelor_2026/b69/b69_01.webp",
       "images/Bachelor_2026/b69/b69_02.webp",
-      "images/Bachelor_2026/b69/b69_03.webp"
+      "images/Bachelor_2026/b69/b69_03.webp",
+      "images/Bachelor_2026/b69/b69_04.webp",
+      "images/Bachelor_2026/b69/b69_05.webp",
+      "images/Bachelor_2026/b69/b69_06.webp",
+      "images/Bachelor_2026/b69/b69_07.webp",
+      "images/Bachelor_2026/b69/b69_08.webp"
     ]
   },
   {
@@ -1486,7 +1491,13 @@
       "images/Bachelor_2026/b70/b70_03.webp",
       "images/Bachelor_2026/b70/b70_04.webp",
       "images/Bachelor_2026/b70/b70_05.webp",
-      "images/Bachelor_2026/b70/b70_06.webp"
+      "images/Bachelor_2026/b70/b70_06.webp",
+      "images/Bachelor_2026/b70/b70_07.webp",
+      "images/Bachelor_2026/b70/b70_08.webp",
+      "images/Bachelor_2026/b70/b70_09.webp",
+      "images/Bachelor_2026/b70/b70_10.webp",
+      "images/Bachelor_2026/b70/b70_11.webp",
+      "images/Bachelor_2026/b70/b70_12.webp"
     ]
   },
   {
@@ -1513,7 +1524,9 @@
     "video_to_last": false,
     "image_list": [
       "images/Bachelor_2026/b71/b71_01.webp",
-      "images/Bachelor_2026/b71/b71_02.webp"
+      "images/Bachelor_2026/b71/b71_02.webp",
+      "images/Bachelor_2026/b71/b71_03.webp",
+      "images/Bachelor_2026/b71/b71_04.webp"
     ]
   },
   {
@@ -1550,7 +1563,11 @@
       "images/Bachelor_2026/b72/b72_05.webp",
       "images/Bachelor_2026/b72/b72_06.webp",
       "images/Bachelor_2026/b72/b72_07.webp",
-      "images/Bachelor_2026/b72/b72_08.webp"
+      "images/Bachelor_2026/b72/b72_08.webp",
+      "images/Bachelor_2026/b72/b72_09.webp",
+      "images/Bachelor_2026/b72/b72_10.webp",
+      "images/Bachelor_2026/b72/b72_11.webp",
+      "images/Bachelor_2026/b72/b72_12.webp"
     ]
   },
   {
@@ -1577,7 +1594,11 @@
       "images/Bachelor_2026/b73/b73_01.webp",
       "images/Bachelor_2026/b73/b73_02.webp",
       "images/Bachelor_2026/b73/b73_03.webp",
-      "images/Bachelor_2026/b73/b73_04.webp"
+      "images/Bachelor_2026/b73/b73_04.webp",
+      "images/Bachelor_2026/b73/b73_05.webp",
+      "images/Bachelor_2026/b73/b73_06.webp",
+      "images/Bachelor_2026/b73/b73_07.webp",
+      "images/Bachelor_2026/b73/b73_08.webp"
     ]
   },
   {
@@ -1604,7 +1625,10 @@
     "image_list": [
       "images/Bachelor_2026/b74/b74_01.webp",
       "images/Bachelor_2026/b74/b74_02.webp",
-      "images/Bachelor_2026/b74/b74_03.webp"
+      "images/Bachelor_2026/b74/b74_03.webp",
+      "images/Bachelor_2026/b74/b74_04.webp",
+      "images/Bachelor_2026/b74/b74_05.webp",
+      "images/Bachelor_2026/b74/b74_06.webp"
     ]
   },
   {
