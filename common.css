@@ -26,12 +26,22 @@ html::-webkit-scrollbar {
 }
 /* htmlがスクロール要素になっているので、bodyとhtml両方にスクロールを出ないように指定する */
 
+
+.page-wrapper {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+
+
 /* 左側のメイン窓 */
 .main-window {
   position: relative;
-  width: 100%;
+  width: calc(100% - 40px);
   z-index: 1;
   background-color: transparent;
+  flex: 1;
 }
 
 
@@ -43,24 +53,25 @@ html::-webkit-scrollbar {
 .side-bar {
   width: 40px;
   /* height: 100dvh;  /* safariでは下にあるUIで文字が隠れたりするので、動的ビューポートの高さ(dynamic viewport height)を指定 */
-  right: 0;
+  height: 100vh;
   top: 0;
-  bottom: 0;
   background-color: transparent;
   box-shadow: none;
   /*flex-shrink: 0;        /* 画面が狭くなってもバーが潰れないようにする */
 
-  position: fixed;
+  position: sticky;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 700;
+  align-self: flex-start;
 
   pointer-events: none; /* サイドバーの初期状態を、指が通り抜ける設定にするため、autoではなくnoneへ */
   touch-action: none; /* このエリアでのスクロールをブラウザに無視させる */
 
   box-sizing: border-box; /* paddingを幅に含める */
   /*transition: width 0.4s ease;*/
+  flex-shrink: 0;
 }
 .side-bar.is-open {
   width: 100vw;
