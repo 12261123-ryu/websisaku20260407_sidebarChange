@@ -251,12 +251,12 @@
   .work-part-grid {
     display: grid;
     /* 左に文字(fr)、右に画像(fr)の比率でカラムを作成 */
-    grid-template-columns: 1fr 1.8fr;
     /* 文字(info)を左側に固定し、右側にメインとサブを並べる */
-    grid-template-areas: 
-      "info-block main-visual"
-      "info-block sub-images";
-    
+    /* grid-template-columns: 1fr 1.8fr;   grid-template-areas: "info-block main-visual" "info-block sub-images"; */
+    /*上は文字カラムが左に、下は右に来る*/
+    grid-template-columns: 1.9fr 1fr;   grid-template-areas: "main-visual info-block" "sub-images info-block";
+
+
     column-gap: 35px; /* 左右カラムの間の余白 */
     row-gap: 20px;    /* メイン画像とサブ画像の間 */
     align-items: flex-start; /* 中身を上揃えにする */

@@ -6,7 +6,7 @@
 
   const IMG_SIZE = 30;
   const INITIAL_COUNT = 5;
-  const MAX_COUNT = 30;
+  //const MAX_COUNT = 30;
   const IMAGE_NAMES = [
     "tubu1.webp", // pink
     "tubu2.webp", // orange
@@ -14,6 +14,9 @@
     "tubu4.webp", // green
     "tubu5.webp", // blue
   ];
+
+  //個別ページを閲覧するたびに初期数を1つずつ最大5まで増やすギミックを試す用
+  const MAX_VISIT_PLUS = 5;
 
 
   //追加
@@ -28,9 +31,26 @@
     'M': ["tubu1.webp", "tubu2.webp", "tubu3.webp", "tubu4.webp", "tubu5.webp"],
     'all': ["tubu1.webp", "tubu2.webp", "tubu3.webp", "tubu4.webp", "tubu5.webp"]
   };
+
+  let currentRecipeKey = 'all';
+
+
+    //個別ページを閲覧するたびに初期数を1つずつ最大5まで増やすギミックを試す用
+  // 現在のベース数を取得
+  function getBaseCount() {
+    const plus = Math.min(parseInt(sessionStorage.getItem('visitPlus') || '0'), MAX_VISIT_PLUS);
+    return INITIAL_COUNT + plus;
+  }
+
+  // 現在のタップ上限を取得
+  function getMaxCount() {
+    return getBaseCount()*6;
+  }
+
   // 外部（work.jsなど）から色を変えられるようにする関数
   window.updateTubuColors = function(projectKey) {
     const key = PROJECT_RECIPES[projectKey] ? projectKey : 'all';
+    currentRecipeKey = key;
     const recipe = PROJECT_RECIPES[key];
     
     floaters.forEach((data, i) => {
@@ -43,6 +63,19 @@
     });
   };
 
+  window.syncTubuCount = function() {
+  const baseCount = getBaseCount();
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const recipe = PROJECT_RECIPES[currentRecipeKey];
+  
+  while (floaters.length < baseCount) {
+    const imgName = recipe[floaters.length % recipe.length];
+    const x = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, width - IMG_SIZE * 3));
+    const y = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, height - IMG_SIZE * 3));
+    createFloater(imgName, x, y, false);
+  }
+};
 
 
 
@@ -148,10 +181,12 @@
     return data;
   }
 
+  //個別ページを閲覧するたびに初期数を1つずつ最大5まで増やすギミックのため、書き換えた
   function onFloaterClick(data) {
-    if (floaters.length >= MAX_COUNT) return;
+    const maxCount = getMaxCount();
+    if (floaters.length >= maxCount) return;
 
-    const spawnCount = Math.min(2, MAX_COUNT - floaters.length);
+    const spawnCount = Math.min(2, maxCount - floaters.length);
     for (let i = 0; i < spawnCount; i += 1) {
       const angle = randomBetween(0, Math.PI * 2);
       const dist = randomBetween(30, 82);
@@ -160,6 +195,7 @@
       createFloater(data.imgName, data.x, data.y, true, bx, by);
     }
   }
+
 
   function tick() {
     const width = window.innerWidth;
@@ -235,22 +271,42 @@
     }
   }
 
-  function createInitialFloaters() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+//  function createInitialFloaters() {
+//    const width = window.innerWidth;
+//    const height = window.innerHeight;
 
-    const params = new URLSearchParams(window.location.search);
-    const filter = params.get('filter');
-    const recipeKey = PROJECT_RECIPES[filter] ? filter : 'all';
-    const recipe = PROJECT_RECIPES[recipeKey];
+//    const params = new URLSearchParams(window.location.search);
+//    const filter = params.get('filter');
+//    const recipeKey = PROJECT_RECIPES[filter] ? filter : 'all';
+//    const recipe = PROJECT_RECIPES[recipeKey];
 
-    for (let i = 0; i < INITIAL_COUNT; i += 1) {
-      const imgName = recipe[i % recipe.length]; // IMAGE_NAMESではなくレシピから選ぶ
-      const x = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, width - IMG_SIZE * 3));
-      const y = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, height - IMG_SIZE * 3));
-      createFloater(imgName, x, y, false);
-    }
+//    for (let i = 0; i < INITIAL_COUNT; i += 1) {
+//      const imgName = recipe[i % recipe.length]; // IMAGE_NAMESではなくレシピから選ぶ
+//      const x = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, width - IMG_SIZE * 3));
+//      const y = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, height - IMG_SIZE * 3));
+//      createFloater(imgName, x, y, false);
+//    }
+//  }
+//個別ページを閲覧するたびに初期数を1つずつ最大5まで増やすギミックを試す用
+function createInitialFloaters() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const baseCount = getBaseCount(); // INITIAL_COUNTの代わりに
+
+  const params = new URLSearchParams(window.location.search);
+  const filter = params.get('filter');
+  const recipeKey = PROJECT_RECIPES[filter] ? filter : 'all';
+  const recipe = PROJECT_RECIPES[recipeKey];
+
+  for (let i = 0; i < baseCount; i += 1) {
+    const imgName = recipe[i % recipe.length];
+    const x = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, width - IMG_SIZE * 3));
+    const y = randomBetween(IMG_SIZE * 2, Math.max(IMG_SIZE * 2, height - IMG_SIZE * 3));
+    createFloater(imgName, x, y, false);
   }
+}
+
+
 
   function watchMenuState() {
     const observer = new MutationObserver(syncInteractivity);
@@ -276,4 +332,7 @@
 
   init();
 })();
+
+
+
 

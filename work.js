@@ -29,6 +29,22 @@ async function loadWorkDetail() {
         window.updateTubuColors(work.project);
       }
 
+      //個別ページを閲覧するたびに初期数を1つずつ最大5まで増やすギミックを試す用
+      const visitedWorks = JSON.parse(sessionStorage.getItem('visitedWorks') || '[]');
+      if (!visitedWorks.includes(work.en_name)) {
+        visitedWorks.push(work.en_name);
+        sessionStorage.setItem('visitedWorks', JSON.stringify(visitedWorks));
+        const currentPlus = parseInt(sessionStorage.getItem('visitPlus') || '0');
+        if (currentPlus < 5) {
+          sessionStorage.setItem('visitPlus', String(currentPlus + 1));
+        // 粒を即座に追加
+        if (window.syncTubuCount) {
+          window.syncTubuCount();
+        }
+      }
+      }
+
+
       // 戻るリンクにfilterパラメータを付ける
       const lastFilter = sessionStorage.getItem('lastFilter');
       const returnLink = document.querySelector('.return-to-Top a');
