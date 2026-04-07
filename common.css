@@ -29,7 +29,7 @@ html::-webkit-scrollbar {
 
 .page-wrapper {
   display: flex;
-  min-height: 100vh;
+  min-height: 100%;
   position: relative;
 }
 
@@ -38,7 +38,7 @@ html::-webkit-scrollbar {
 /* 左側のメイン窓 */
 .main-window {
   position: relative;
-  width: calc(100% - 40px);
+  width: 100%;
   z-index: 1;
   background-color: transparent;
   flex: 1;
@@ -53,7 +53,7 @@ html::-webkit-scrollbar {
 .side-bar {
   width: 40px;
   /* height: 100dvh;  /* safariでは下にあるUIで文字が隠れたりするので、動的ビューポートの高さ(dynamic viewport height)を指定 */
-  height: 100vh;
+  height: 100dvh;
   top: 0;
   background-color: transparent;
   box-shadow: none;
