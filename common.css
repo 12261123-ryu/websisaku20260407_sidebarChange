@@ -46,7 +46,6 @@ html::-webkit-scrollbar {
   right: 0;
   top: 0;
   bottom: 0;
-  min-height: 100lvh; /* lvh=large viewport height=UIが消えた時の高さ */
   background-color: transparent;
   box-shadow: none;
   /*flex-shrink: 0;        /* 画面が狭くなってもバーが潰れないようにする */
