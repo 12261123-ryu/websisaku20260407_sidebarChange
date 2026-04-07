@@ -71,22 +71,6 @@ document.addEventListener("touchstart", function() {}, {passive: true});
 
 
 
-//iphone16eなどのchromeではサイドバーが下まで伸びきらないのを対処試し
-function syncSidebarHeight() {
-  const sidebar = document.getElementById('side-bar');
-  const fixedLabels = document.querySelector('.fixed-labels');
-  if (!sidebar || !fixedLabels) return;
-  
-  const h = window.innerHeight;
-  sidebar.style.height = h + 'px';
-  fixedLabels.style.height = h + 'px';
-}
-
-syncSidebarHeight();
-window.addEventListener('resize', syncSidebarHeight);
-
-
-
 
 
 // サイドバー全体ではなく、ラベル部分だけをクリック対象にする
