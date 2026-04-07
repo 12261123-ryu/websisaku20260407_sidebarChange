@@ -43,10 +43,10 @@ html::-webkit-scrollbar {
 .side-bar {
   width: 40px;
   /* height: 100dvh;  /* safariでは下にあるUIで文字が隠れたりするので、動的ビューポートの高さ(dynamic viewport height)を指定 */
-  height: 100%; /* iphone16など角丸のスマホで、サイドバーが上に少し上がって、下に余白ができちゃうのでその対応。文字は表示領域内に収めたいので別で指定 */
+  height: 100svh; /* iphone16など角丸のスマホで、サイドバーが上に少し上がって、下に余白ができちゃうのでその対応。文字は表示領域内に収めたいので別で指定 */
   right: 0;
   top: 0;
-  bottom: 0;
+  bottom: calc(-1 * env(safe-area-inset-bottom));
   background-color: transparent;
   box-shadow: none;
   /*flex-shrink: 0;        /* 画面が狭くなってもバーが潰れないようにする */
