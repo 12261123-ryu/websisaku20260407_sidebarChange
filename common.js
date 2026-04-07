@@ -64,9 +64,26 @@ fixedLabels.addEventListener('click', (e) => {
 });
 
 
-// タッチイベントを有効化するおまじない
+// タッチイベントを有効化する
 //一覧などの作品ブロックをタップ時に、ホバーのように一瞬画像は青く文字はマゼンタにする試し
 document.addEventListener("touchstart", function() {}, {passive: true});
+
+
+
+
+//iphone16eなどのchromeではサイドバーが下まで伸びきらないのを対処試し
+function syncSidebarHeight() {
+  const sidebar = document.getElementById('side-bar');
+  const fixedLabels = document.querySelector('.fixed-labels');
+  if (!sidebar || !fixedLabels) return;
+  
+  const h = window.innerHeight;
+  sidebar.style.height = h + 'px';
+  fixedLabels.style.height = h + 'px';
+}
+
+syncSidebarHeight();
+window.addEventListener('resize', syncSidebarHeight);
 
 
 
